@@ -17,6 +17,38 @@ app.get('/books', async (request, response) => {
     }
 });
 
+app.get('/books/:id', async (request, response) => {
+    try {
+        const book = await prisma.books.findUnique({
+            where: {
+                id: Number(request.params.id),
+            }
+        });
+        response.status(200).json(book);
+    } catch(error) {
+            response.status(404).send({
+                message: 'Midagi läks valesti',
+                error,
+            })
+    }
+});
+
+app.delete('/books/:id', async (request, response) => {
+    try {
+        const deleteBook = await prisma.books.delete({
+            where: {
+                id: Number(request.params.id)
+            },
+        });
+        response.status(200).json(deleteBook);
+    } catch(error) {
+            response.status(404).send({
+                message: 'Midagi läks valesti',
+                error,
+            })
+    }
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server listening at port ${ PORT }`);
