@@ -10,7 +10,7 @@ CREATE TABLE `authors` (
 -- CreateTable
 CREATE TABLE `book_authors` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `book_id` INTEGER NOT NULL,
+    `book_id` INTEGER NULL,
     `author_id` INTEGER NOT NULL,
 
     INDEX `fk_yl21_Books_has_yl21_Authors_yl21_Authors1_idx`(`author_id`),
@@ -54,7 +54,7 @@ CREATE TABLE `orders` (
     `order_date` DATETIME(0) NOT NULL,
     `status` ENUM('ordered', 'paid', 'sent') NOT NULL,
     `client_id` INTEGER NOT NULL,
-    `book_id` INTEGER NOT NULL,
+    `book_id` INTEGER NULL,
 
     INDEX `fk_yl21_Orders_yl21_Books1_idx`(`book_id`),
     INDEX `fk_yl21_Orders_yl21_Clients1_idx`(`client_id`),
@@ -65,10 +65,10 @@ CREATE TABLE `orders` (
 ALTER TABLE `book_authors` ADD CONSTRAINT `fk_yl21_Books_has_yl21_Authors_yl21_Authors1` FOREIGN KEY (`author_id`) REFERENCES `authors`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE `book_authors` ADD CONSTRAINT `fk_yl21_Books_has_yl21_Authors_yl21_Books` FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `book_authors` ADD CONSTRAINT `fk_yl21_Books_has_yl21_Authors_yl21_Books` FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE `orders` ADD CONSTRAINT `fk_yl21_Orders_yl21_Books1` FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `orders` ADD CONSTRAINT `fk_yl21_Orders_yl21_Books1` FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE `orders` ADD CONSTRAINT `fk_yl21_Orders_yl21_Clients1` FOREIGN KEY (`client_id`) REFERENCES `clients`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

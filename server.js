@@ -5,6 +5,8 @@ const prisma = new PrismaClient()
 const PORT = 3000;
 const app = express();
 
+app.use(express.json());
+
 app.get('/books', async (request, response) => {
     try {
         const books = await prisma.books.findMany();
