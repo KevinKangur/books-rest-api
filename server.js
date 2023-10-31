@@ -49,6 +49,22 @@ app.delete('/books/:id', async (request, response) => {
     }
 });
 
+app.post('/books', async (request, response) => {
+    console.log(request.body)
+    try {
+        const newBook = await prisma.books.create({
+            data: { ...request.body },
+        })
+
+        response.status(200).json(newBook);
+    } catch(error) {
+            response.status(404).send({
+                message: 'Midagi läks valesti',
+                error,
+            })
+    }
+});
+
 
 app.listen(PORT, () => {
     console.log(`Server listening at port ${ PORT }`);
