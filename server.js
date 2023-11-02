@@ -1,4 +1,4 @@
-import express from "express";
+import express, { response } from "express";
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient()
@@ -67,6 +67,38 @@ app.post('/books', async (request, response) => {
     }
 });
 
+app.put('/books/:id', async (request, response) => {
+    try {
+        const updateBook = await prisma.books.update({
+            where: {
+                id: Number(request.params.id),
+            },
+            data: { ...request.body },
+        });
+        response.status(200).json(updateBook);
+    } catch(error) {
+            response.status(404).send({
+                message: 'Midagi läks valesti',
+                error,
+            })
+    }
+});
+
+app.post('/books', async (request, response) => {
+    console.log(request.body)
+    try {
+        const newBook = await prisma.books.create({
+            data: { ...request.body },
+        })
+
+        response.status(200).json(newBook);
+    } catch(error) {
+            response.status(404).send({
+                message: 'Midagi läks valesti',
+                error,
+            })
+    }
+});
 
 app.listen(PORT, () => {
     console.log(`Server listening at port ${ PORT }`);
