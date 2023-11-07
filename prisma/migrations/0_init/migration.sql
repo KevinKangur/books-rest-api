@@ -30,6 +30,7 @@ CREATE TABLE `books` (
     `stock_saldo` VARCHAR(45) NOT NULL DEFAULT '0',
     `pages` INTEGER NOT NULL,
     `type` ENUM('new', 'used', 'ebook') NOT NULL,
+    `is_deleted` BOOLEAN NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -65,10 +66,10 @@ CREATE TABLE `orders` (
 ALTER TABLE `book_authors` ADD CONSTRAINT `fk_yl21_Books_has_yl21_Authors_yl21_Authors1` FOREIGN KEY (`author_id`) REFERENCES `authors`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE `book_authors` ADD CONSTRAINT `fk_yl21_Books_has_yl21_Authors_yl21_Books` FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+ALTER TABLE `book_authors` ADD CONSTRAINT `fk_yl21_Books_has_yl21_Authors_yl21_Books` FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 -- AddForeignKey
-ALTER TABLE `orders` ADD CONSTRAINT `fk_yl21_Orders_yl21_Books1` FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+ALTER TABLE `orders` ADD CONSTRAINT `fk_yl21_Orders_yl21_Books1` FOREIGN KEY (`book_id`) REFERENCES `books`(`id`) ON DELETE SET NULL ON UPDATE SET NULL;
 
 -- AddForeignKey
 ALTER TABLE `orders` ADD CONSTRAINT `fk_yl21_Orders_yl21_Clients1` FOREIGN KEY (`client_id`) REFERENCES `clients`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

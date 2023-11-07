@@ -36,6 +36,7 @@ model books {
   stock_saldo  String         @default("0") @db.VarChar(45)
   pages        Int
   type         books_type
+  is_deleted   Boolean
   book_authors book_authors[]
   orders       orders[]
 }
